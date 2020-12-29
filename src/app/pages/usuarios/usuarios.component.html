@@ -1,0 +1,137 @@
+<h5>Mantenimiento de usuarios</h5>
+<hr>
+<button class="btn waves-effect waves-light modal-trigger" data-target="modal-usuario-new">Agregar usuario
+  <i class="material-icons right">add</i>
+</button>
+
+<table class="table-responsive">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Correo</th>
+      <th>Role</th>
+      <th>Editar</th>
+      <th>Habilitado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let usuario of us.usuarios">
+      <td>{{usuario.nombre}}</td>
+      <td>{{usuario.apellido}}</td>
+      <td>{{usuario.email}}</td>
+      <td>
+        <a class="modal-trigger" href="#modal-role">{{usuario.role}}</a>
+      </td>
+      <td>
+        <button (click) = "cargarUsuarioToEdit(usuario._id)" class="btn-floating btn-small waves-effect waves-light indigo modal-trigger" data-target="modal-usuario-update"><i class="material-icons">edit</i></button>
+      </td>
+      <td>
+        <div class="switch">
+          <label>
+            No
+            <input type="checkbox" [attr.checked] = "usuario.activo == true ? true : null" #input (change) = "usuarioStateChange(input.checked, usuario._id)">
+            <span class="lever"></span>
+            Sí
+          </label>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="row">
+  <div class="col s2 m2 l2 offset-s5 offset-m5 offset-l5">
+    <ul class="pagination">
+      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+      <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- Modal Update -->
+<div id="modal-usuario-update" class="modal">
+  <div class="modal-content">
+    <h5>Modificar datos de usuario</h5>
+    <div class="row">
+      <form [formGroup] = "formGroupUpdate">
+        <div class="col s12 m12 l12">
+          <div class="input-field col s10 m10 l10">
+            <input type="text" class="validate" id="nombre-update" formControlName = "nombre">
+            <label for="nombre-update" id="nombre-label">Nombre</label>
+            <!-- <small class="red-text" *ngIf = "nombreValido">El nombre es requerido</small> -->
+          </div>
+          <div class="input-field col s10 m10 l10">
+            <input type="text" class="validate" id="apellidos-update" formControlName = "apellido">
+            <label for="apellidos-update" id="apellido-label">Apellido</label>
+            <!-- <small class="red-text" *ngIf = "apellidosValidos">Los apellidos son requeridos</small> -->
+          </div>
+          <div class="input-field col s10 m10 l10">
+            <input type="email" class="validate" id="email-update" formControlName = "email">
+            <label for="email-update" id="email-label">Correo</label>
+            <!-- <small class="red-text" *ngIf = "emailValido">Formato de correo inválido</small> -->
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button id="close-my-modal" class="waves-effect waves-green btn-flat modal-close">Salir</button>
+    <button class="waves-effect waves-green btn-flat">Guardar</button>
+  </div>
+</div>
+
+<!-- Modal Nuevo Usuario -->
+<div id="modal-usuario-new" class="modal">
+  <div class="modal-content">
+    <h5>Agregar usuario</h5>
+    <div class="row">
+      <form [formGroup] = "formGroupNew">
+        <div class="col s12 m12 l12">
+          <div class="input-field col s10 m10 l10">
+            <input type="text" class="validate" id="nombre-new" formControlName = "nombre">
+            <label for="nombre-new" id="nombre-label">Nombre</label>
+            <!-- <small class="red-text" *ngIf = "nombreValido">El nombre es requerido</small> -->
+          </div>
+          <div class="input-field col s10 m10 l10">
+            <input type="text" class="validate" id="apellidos-new" formControlName = "apellido">
+            <label for="apellidos-new" id="apellido-label">Apellido</label>
+            <!-- <small class="red-text" *ngIf = "apellidosValidos">Los apellidos son requeridos</small> -->
+          </div>
+          <div class="input-field col s10 m10 l10">
+            <input type="email" class="validate" id="email-new" formControlName = "email">
+            <label for="email-new" id="email-label">Correo</label>
+            <!-- <small class="red-text" *ngIf = "emailValido">Formato de correo inválido</small> -->
+          </div>
+          <div class="input-field col s10 m10 l10">
+            <select formControlName = "role">
+              <option value="" selected disabled>SELECCIONE UN ROL</option>
+              <option (change) = "changeRole($event)" [ngValue] = "role" *ngFor="let role of us.roles">{{role}}</option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button id="close-my-modal" class="waves-effect waves-green btn-flat modal-close">Salir</button>
+    <button (click) = "guardarUsuario()" class="waves-effect waves-green btn-flat">Guardar</button>
+  </div>
+</div>
+
+
+<!-- Modal Structure -->
+<div id="modal-role" class="modal">
+  <div class="modal-content">
+    <h5>Modificar rol de usuario</h5>
+    <select>
+      <option value="" selected disabled>SELECCIONE UN ROL</option>
+      <option value = "{{role}}" id = "{{role}}" *ngFor="let role of us.roles">{{role}}</option>
+    </select>
+  </div>
+  <div class="modal-footer">
+    <button id="close-my-modal" class="waves-effect waves-green btn-flat modal-close">Salir</button>
+    <button class="waves-effect waves-green btn-flat">Guardar</button>
+  </div>
+</div>

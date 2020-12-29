@@ -1,0 +1,86 @@
+<h5>Mantenimiento de clientes</h5>
+<hr>
+<button (click) = "setearForm()" class="btn waves-effect waves-light modal-trigger" data-target="modal-cliente">Agregar cliente
+  <i class="material-icons right">add</i>
+</button>
+
+<table class="table-responsive">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Apellidos</th>
+      <th>Nro. de documento</th>
+      <th>Correo</th>
+      <th>Teléfono</th>
+      <th>Editar</th>
+      <th>Eliminar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cliente of cs.clientes">
+      <td>{{cliente.nombre}}</td>
+      <td>{{cliente.apellidos}}</td>
+      <td>{{cliente.nroDoc}}</td>
+      <td>{{cliente.email}}</td>
+      <td>{{cliente.telefono}}</td>
+      <td>
+        <button (click) = "cargarClienteToEdit(cliente._id)" class="btn-floating btn-small waves-effect waves-light indigo modal-trigger" data-target="modal-cliente"><i class="material-icons">edit</i></button>
+      </td>
+      <td>
+        <button (click) = "eliminarCliente(cliente._id)" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="row">
+  <div class="col s2 m2 l2 offset-s5 offset-m5 offset-l5">
+    <ul class="pagination">
+      <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+      <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- Modal Structure -->
+<div id="modal-cliente" class="modal modal-fixed-footer">
+  <div class="modal-content">
+    <h5>Agregar libro</h5>
+    <div class="row">
+      <form [formGroup] = "formGroup" id="form">
+        <div class="col s12 m12 l12">
+          <div class="input-field col s10 m10 l10">
+            <input type="text" class="validate" id="nombre" formControlName = "nombre" [class.invalid] = "nombreValido">
+            <label for="nombre" id="nombre-label">Nombre</label>
+            <small class="red-text" *ngIf = "nombreValido">El nombre es requerido</small>
+          </div>
+          <div class="input-field col s10 m10 l10">
+            <input type="text" class="validate" id="apellidos" formControlName = "apellidos" [class.invalid] = "apellidosValidos">
+            <label for="apellidos" id="apellidos-label">Apellidos</label>
+            <small class="red-text" *ngIf = "apellidosValidos">Los apellidos son requeridos</small>
+          </div>
+          <div class="input-field col s10 m10 l10">
+            <input type="text" class="validate" id="nroDoc" formControlName = "nroDoc" [class.invalid] = "nroDocValido">
+            <label for="nroDoc" id="nroDoc-label">Nro de documento</label>
+            <small class="red-text" *ngIf = "nroDocValido">El nro. de documento es requerido</small>
+          </div>
+          <div class="input-field col s10 m10 l10">
+            <input type="email" class="validate" id="email" formControlName = "email">
+            <label for="email" id="email-label">Correo</label>
+            <small class="red-text" *ngIf = "emailValido">Formato de correo inválido</small>
+          </div>
+          <div class="input-field col s10 m10 l10">
+            <input type="text" class="validate" id="telefono" formControlName = "telefono">
+            <label for="telefono" id="telefono-label">Teléfono</label>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button id="close-my-modal" class="waves-effect waves-green btn-flat modal-close">Salir</button>
+    <button (click) = "guardarActualizarCliente()" class="waves-effect waves-green btn-flat">Guardar</button>
+  </div>
+</div>
+

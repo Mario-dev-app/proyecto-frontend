@@ -1,0 +1,10 @@
+.custom-container-old{
+  background-image: url('../../assets/images/login-bg-new.jpg');
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+}
+
+.custom-container{
+  margin-top: 100px;
+}
